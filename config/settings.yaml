@@ -1,0 +1,15 @@
+# Thresholds and weights for duplicate detection
+thresholds:
+  pair_score: 0.78   # overall score above which a pair is considered duplicate
+weights:
+  name: 0.45         # weight for name similarity (first + surname)
+  dob: 0.20          # weight for date of birth similarity
+  birthplace: 0.10   # weight for birthplace similarity
+  postcode: 0.10     # weight for postcode similarity
+  gender: 0.05       # weight for gender match
+  occupation: 0.10   # weight for occupation similarity
+
+blocking:
+  # choose one: ["surname_metaphone_year", "postcode_prefix_year", "first_initial_year"]
+  strategy: "surname_metaphone_year"
+  postcode_prefix_len: 3

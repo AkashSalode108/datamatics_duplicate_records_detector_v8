@@ -1,0 +1,10 @@
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.1
+rapidfuzz==3.9.6
+jellyfish==1.0.3
+python-dateutil==2.9.0.post0
+streamlit==1.37.0
+networkx==3.3
+pyyaml==6.0.2
+pytest
