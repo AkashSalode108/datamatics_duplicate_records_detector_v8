@@ -20,7 +20,7 @@ with st.sidebar:
         cfg_obj = DetectorConfig(
             pair_score_threshold = cfg.get("thresholds", {}).get("pair_score", 0.78),
             weights = cfg.get("weights", {}),
-            blocking_strategy = cfg.get("blocking", {}).get("strategy","surname_metaphone_year"),
+            blocking_strategy = cfg.get("blocking", {}).get("strategy","first_surname_metaphone_year"),
             postcode_prefix_len = cfg.get("blocking", {}).get("postcode_prefix_len", 3),
         )
     else:
@@ -38,7 +38,7 @@ with st.sidebar:
     cfg_obj.weights = {"name":w_name,"dob":w_dob,"birthplace":w_birth,"postcode":w_post,"gender":w_gender,"occupation":w_occ}
 
     st.subheader("Blocking")
-    cfg_obj.blocking_strategy = st.selectbox("Strategy", ["surname_metaphone_year","postcode_prefix_year","first_initial_year"], index=["surname_metaphone_year","postcode_prefix_year","first_initial_year"].index(cfg_obj.blocking_strategy))
+    cfg_obj.blocking_strategy = st.selectbox("Strategy", ["surname_metaphone_year", "postcode_prefix_year", "first_initial_year", "first_surname_metaphone_year"], index=["surname_metaphone_year", "postcode_prefix_year", "first_initial_year", "first_surname_metaphone_year"].index(cfg_obj.blocking_strategy))
     cfg_obj.postcode_prefix_len = st.number_input("Postcode prefix length", min_value=1, max_value=10, value=int(cfg_obj.postcode_prefix_len))
 
 uploaded = st.file_uploader("Upload CSV", type=["csv"])

@@ -2,6 +2,7 @@
 import pandas as pd
 import jellyfish
 
+
 def double_metaphone_safe(s: str):
     if not s:
         return ("","")
@@ -26,12 +27,24 @@ def first_initial_year_block(df: pd.DataFrame) -> pd.Series:
     year_key = df["dob_year"].fillna(-1).astype(int).astype(str)
     return fi + "|" + year_key
 
+def first_surname_metaphone_year_block(df: pd.DataFrame) -> pd.Series:
+    """
+    Block by first name metaphone + surname metaphone + birth year
+    """
+    fn_key = df["first_name_clean"].fillna("").apply(lambda x: (double_metaphone_safe(x)[0] or x[:1]))
+    sn_key = df["surname_clean"].fillna("").apply(lambda x: (double_metaphone_safe(x)[0] or x[:1]))
+    year_key = df["dob_year"].fillna(-1).astype(int).astype(str)
+    return fn_key.astype(str) + "_" + sn_key.astype(str) + "|" + year_key
+
 def apply_blocking(df: pd.DataFrame, strategy: str, postcode_prefix_len: int = 3) -> pd.Series:
+    
     if strategy == "surname_metaphone_year":
         return surname_metaphone_year_block(df)
     elif strategy == "postcode_prefix_year":
         return postcode_prefix_year_block(df, postcode_prefix_len)
     elif strategy == "first_initial_year":
         return first_initial_year_block(df)
+    elif strategy == "first_surname_metaphone_year":
+        return first_surname_metaphone_year_block(df)
     else:
         return surname_metaphone_year_block(df)
